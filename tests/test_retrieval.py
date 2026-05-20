@@ -29,7 +29,7 @@ from eval_dataset import EVAL_QUESTIONS
 
 # ── Setup ──────────────────────────────────────────────────
 
-def setup_retrieval_pipeline(data_dir="data/processed"):
+def setup_retrieval_pipeline(data_dir="../data/processed"):
     loader = DirectoryLoader(
         data_dir,
         glob="**/*.txt",
