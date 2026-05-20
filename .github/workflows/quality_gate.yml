@@ -15,12 +15,12 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
       - name: Cache pip dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
@@ -28,7 +28,7 @@ jobs:
             ${{ runner.os }}-pip-
 
       - name: Cache HuggingFace models
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.cache/huggingface
           key: ${{ runner.os }}-hf-models-v1
@@ -39,15 +39,6 @@ jobs:
         run: |
           pip install -r requirements.txt
 
-      - name: Prepare data
-        run: |
-          python src/prepare_data.py
-
       - name: Run retrieval quality test
         run: |
           cd tests && python test_retrieval.py
-
-      - name: Report result
-        if: always()
-        run: |
-          echo "Quality gate complete"
