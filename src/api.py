@@ -2,8 +2,6 @@ import os
 import sys
 import threading
 
-# Only lightweight imports at top level
-# Heavy ML imports happen inside load_pipeline()
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse, JSONResponse
@@ -12,10 +10,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# ============================================================
-# PIPELINE STATE
-# ============================================================
-
+# Pipeline state
 _pipeline = {}
 _ready = False
 _loading = False
@@ -23,12 +18,7 @@ _lock = threading.Lock()
 
 
 def load_pipeline():
-    """
-    All heavy imports happen here — inside the background thread.
-    This means the FastAPI server starts in <1 second.
-    Models load in the background over ~60 seconds.
-    """
-    global _ready, _loading
+    global _pipeline, _ready, _loading
 
     with _lock:
         if _ready or _loading:
@@ -38,7 +28,6 @@ def load_pipeline():
     try:
         print("Starting pipeline load...")
 
-        # Heavy imports happen here, not at module level
         from langchain_community.document_loaders import (
             TextLoader, DirectoryLoader
         )
@@ -56,7 +45,7 @@ def load_pipeline():
         from rank_bm25 import BM25Okapi
         from sentence_transformers import CrossEncoder
 
-        print("Imports done. Loading documents...")
+        print("Imports done.")
 
         base = os.path.dirname(os.path.abspath(__file__))
         data_dir = os.path.join(base, "..", "data", "processed")
@@ -108,7 +97,6 @@ def load_pipeline():
             "cross-encoder/ms-marco-MiniLM-L-6-v2",
             max_length=512
         )
-        print("Reranker ready.")
 
         llm = ChatGroq(
             api_key=os.getenv("GROQ_API_KEY"),
@@ -117,9 +105,9 @@ def load_pipeline():
         )
 
         prompt = ChatPromptTemplate.from_template("""
-You are a friendly Bloomington, Indiana tourist assistant.
+You are a friendly Bloomington Indiana tourist assistant.
 Answer using ONLY the information below. Be helpful and concise.
-If you don't have enough information, say so honestly.
+If you don't have enough information say so honestly.
 
 Information:
 {context}
@@ -143,13 +131,12 @@ Answer:""")
         _pipeline["chunks"] = chunks
         _pipeline["reranker"] = reranker
         _pipeline["chain"] = chain
-
-        global _ready
         _ready = True
-        print("Pipeline fully loaded and ready!")
+        print("Pipeline ready!")
 
     except Exception as e:
-        print(f"Pipeline load error: {e}")
+        print(f"Pipeline error: {e}")
+
     finally:
         _loading = False
 
@@ -173,8 +160,6 @@ def reciprocal_rank_fusion(results_list, k=60):
 
 
 def retrieve(query):
-    from rank_bm25 import BM25Okapi
-
     vector_store = _pipeline["vector_store"]
     bm25 = _pipeline["bm25"]
     chunks = _pipeline["chunks"]
@@ -220,29 +205,20 @@ def format_context(docs):
     return "\n\n".join(parts)
 
 
-# ============================================================
-# FASTAPI APP — starts instantly
-# ============================================================
-
+# FastAPI app
 app = FastAPI(title="Bloomington Tourist Assistant")
 
 
 @app.on_event("startup")
 def startup_event():
-    """Kick off background loading. Server starts immediately."""
     t = threading.Thread(target=load_pipeline, daemon=True)
     t.start()
-    print("Server up. Pipeline loading in background.")
+    print("Server started. Loading pipeline in background.")
 
 
 @app.get("/health")
 def health():
-    """Health check — always returns fast."""
-    return {
-        "status": "ok",
-        "ready": _ready,
-        "loading": _loading
-    }
+    return {"status": "ok", "ready": _ready, "loading": _loading}
 
 
 class QuestionRequest(BaseModel):
@@ -262,9 +238,7 @@ def ask(request: QuestionRequest):
     if not _ready:
         return JSONResponse(
             status_code=503,
-            content={
-                "error": "Still loading! Please wait 60 seconds and refresh."
-            }
+            content={"error": "Still loading, please wait 60 seconds"}
         )
 
     try:
@@ -287,8 +261,9 @@ def ask(request: QuestionRequest):
         )
 
 
-# Serve frontend
-static_dir = os.path.join(os.path.dirname(__file__), "static")
+static_dir = os.path.join(
+    os.path.dirname(__file__), "static"
+)
 os.makedirs(static_dir, exist_ok=True)
 app.mount(
     "/static",
