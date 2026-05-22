@@ -1,6 +1,5 @@
 import os
 import sys
-import threading
 
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
@@ -19,11 +18,7 @@ _lock = threading.Lock()
 
 def load_pipeline():
     global _pipeline, _ready, _loading
-
-    with _lock:
-        if _ready or _loading:
-            return
-        _loading = True
+    _loading = True
 
     try:
         print("Starting pipeline load...")
@@ -211,9 +206,8 @@ app = FastAPI(title="Bloomington Tourist Assistant")
 
 @app.on_event("startup")
 def startup_event():
-    t = threading.Thread(target=load_pipeline, daemon=True)
-    t.start()
-    print("Server started. Loading pipeline in background.")
+    load_pipeline()
+    print("Server ready.")
 
 
 @app.get("/health")
