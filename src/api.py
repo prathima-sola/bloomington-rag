@@ -13,7 +13,6 @@ load_dotenv()
 _pipeline = {}
 _ready = False
 _loading = False
-_lock = threading.Lock()
 
 
 def load_pipeline():
