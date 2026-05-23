@@ -269,6 +269,7 @@
                 <p>Powered by RAG · LangChain · Qdrant · Groq</p>
             </div>
             <div class="badge">🟢 Live</div>
+<button onclick="clearHistory()" style="margin-left:8px;background:rgba(255,255,255,0.15);border:none;color:white;padding:4px 10px;border-radius:20px;font-size:11px;cursor:pointer;">Clear</button>
         </div>
 
         <div class="messages" id="messages">
@@ -305,105 +306,128 @@
         </div>
     </div>
 
-    <script>
-        const messagesEl = document.getElementById('messages');
-        const inputEl = document.getElementById('input');
-        const sendBtn = document.getElementById('send-btn');
-        const suggestionsEl = document.getElementById('suggestions');
+   <script>
+    const messagesEl = document.getElementById('messages');
+    const inputEl = document.getElementById('input');
+    const sendBtn = document.getElementById('send-btn');
 
-        function addMessage(text, role, meta='') {
-            // Remove welcome screen on first message
+    // Load saved messages on page load
+    function loadHistory() {
+        const saved = localStorage.getItem('chat_history');
+        if (saved) {
+            const messages = JSON.parse(saved);
             const welcome = messagesEl.querySelector('.welcome');
-            if (welcome) welcome.remove();
+            if (welcome && messages.length > 0) welcome.remove();
+            messages.forEach(m => addMessage(m.text, m.role, m.meta, false));
+        }
+    }
 
-            const msg = document.createElement('div');
-            msg.className = `message ${role}`;
+    // Save messages to localStorage
+    function saveHistory() {
+        const msgs = [];
+        messagesEl.querySelectorAll('.message').forEach(el => {
+            const role = el.classList.contains('user') ? 'user' : 'assistant';
+            const text = el.querySelector('.bubble').innerHTML;
+            const metaEl = el.querySelector('.meta');
+            const meta = metaEl ? metaEl.innerText : '';
+            msgs.push({ role, text, meta });
+        });
+        localStorage.setItem('chat_history', JSON.stringify(msgs));
+    }
 
-            const avatar = role === 'user' ? 'You' : '🏙️';
-            msg.innerHTML = `
-                <div class="avatar">${avatar}</div>
-                <div>
-                    <div class="bubble">${text}</div>
-                    ${meta ? `<div class="meta">${meta}</div>` : ''}
+    function addMessage(text, role, meta='', save=true) {
+        const welcome = messagesEl.querySelector('.welcome');
+        if (welcome) welcome.remove();
+
+        const msg = document.createElement('div');
+        msg.className = `message ${role}`;
+        const avatar = role === 'user' ? 'You' : '🏙️';
+        msg.innerHTML = `
+            <div class="avatar">${avatar}</div>
+            <div>
+                <div class="bubble">${text}</div>
+                ${meta ? `<div class="meta">${meta}</div>` : ''}
+            </div>
+        `;
+        messagesEl.appendChild(msg);
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+        if (save) saveHistory();
+    }
+
+    function addTyping() {
+        const typing = document.createElement('div');
+        typing.className = 'message assistant';
+        typing.id = 'typing';
+        typing.innerHTML = `
+            <div class="avatar">🏙️</div>
+            <div class="bubble">
+                <div class="typing">
+                    <span></span><span></span><span></span>
                 </div>
-            `;
+            </div>
+        `;
+        messagesEl.appendChild(typing);
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
 
-            messagesEl.appendChild(msg);
-            messagesEl.scrollTop = messagesEl.scrollHeight;
-        }
+    function removeTyping() {
+        const t = document.getElementById('typing');
+        if (t) t.remove();
+    }
 
-        function addTyping() {
-            const typing = document.createElement('div');
-            typing.className = 'message assistant';
-            typing.id = 'typing';
-            typing.innerHTML = `
-                <div class="avatar">🏙️</div>
-                <div class="bubble">
-                    <div class="typing">
-                        <span></span><span></span><span></span>
-                    </div>
-                </div>
-            `;
-            messagesEl.appendChild(typing);
-            messagesEl.scrollTop = messagesEl.scrollHeight;
-        }
+    async function ask(question) {
+        inputEl.value = question;
+        sendMessage();
+    }
 
-        function removeTyping() {
-            const t = document.getElementById('typing');
-            if (t) t.remove();
-        }
+    async function sendMessage() {
+        const question = inputEl.value.trim();
+        if (!question) return;
 
-        async function ask(question) {
-            inputEl.value = question;
-            sendMessage();
-        }
+        addMessage(question, 'user');
+        inputEl.value = '';
+        sendBtn.disabled = true;
+        addTyping();
 
-        async function sendMessage() {
-            const question = inputEl.value.trim();
-            if (!question) return;
+        try {
+            const response = await fetch('/ask', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ question })
+            });
 
-            // Hide suggestions after first question
-            suggestionsEl.style.display = 'none';
+            const data = await response.json();
+            removeTyping();
 
-            // Show user message
-            addMessage(question, 'user');
-            inputEl.value = '';
-            sendBtn.disabled = true;
-            addTyping();
-
-            try {
-                const response = await fetch('/ask', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ question })
-                });
-
-                const data = await response.json();
-                removeTyping();
-
-                if (data.error) {
-                    addMessage(
-                        `Sorry, I encountered an error: ${data.error}`,
-                        'assistant'
-                    );
-                } else {
-                    const meta = `${data.sources} sources · confidence ${data.top_score.toFixed(2)}`;
-                    addMessage(data.answer, 'assistant', meta);
-                }
-
-            } catch (err) {
-                removeTyping();
+            if (data.error) {
                 addMessage(
-                    'Sorry, I could not connect to the server. Please try again.',
+                    `Sorry: ${data.error}`,
                     'assistant'
                 );
-            } finally {
-                sendBtn.disabled = false;
-                inputEl.focus();
+            } else {
+                const meta = `${data.sources} sources · confidence ${data.top_score.toFixed(2)}`;
+                addMessage(data.answer, 'assistant', meta);
             }
+        } catch (err) {
+            removeTyping();
+            addMessage(
+                'Sorry, could not connect. Please try again.',
+                'assistant'
+            );
+        } finally {
+            sendBtn.disabled = false;
+            inputEl.focus();
         }
-    </script>
+    }
+
+    // Clear chat history
+    function clearHistory() {
+        localStorage.removeItem('chat_history');
+        location.reload();
+    }
+
+    // Load history on startup
+    loadHistory();
+</script>
 </body>
 </html>
