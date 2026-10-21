@@ -1,0 +1,3923 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-10-21T15:26:25.161523+00:00",
+  "commit": "9bc289593c846e3689b0b7318b06a609db83b606",
+  "working_tree_dirty": true,
+  "config_name": "dense_only",
+  "pipeline": "linear",
+  "config": {
+    "name": "dense_only",
+    "pipeline": "linear",
+    "retrieval": {
+      "strategy": "dense",
+      "rerank": false,
+      "dense_k": 8,
+      "bm25_k": 8,
+      "rrf_k": 60,
+      "top_k": 5,
+      "chunk_size": 600,
+      "chunk_overlap": 100,
+      "embedding_model": "all-MiniLM-L6-v2",
+      "reranker_model": "cross-encoder/ms-marco-MiniLM-L-6-v2"
+    }
+  },
+  "dataset": "evals/datasets/v1.jsonl",
+  "summary": {
+    "overall": {
+      "count": 50,
+      "hit_at_1": 0.74,
+      "hit_at_3": 0.94,
+      "hit_at_5": 0.96,
+      "mrr": 0.8383333333333334,
+      "recall_at_1": 0.72,
+      "recall_at_3": 0.91,
+      "recall_at_5": 0.93
+    },
+    "by_case_type": {
+      "factual": {
+        "count": 34,
+        "hit_at_1": 0.8235294117647058,
+        "hit_at_3": 0.9705882352941176,
+        "hit_at_5": 1.0,
+        "mrr": 0.8995098039215687,
+        "recall_at_1": 0.8235294117647058,
+        "recall_at_3": 0.9705882352941176,
+        "recall_at_5": 1.0
+      },
+      "list": {
+        "count": 3,
+        "hit_at_1": 0.3333333333333333,
+        "hit_at_3": 1.0,
+        "hit_at_5": 1.0,
+        "mrr": 0.6111111111111112,
+        "recall_at_1": 0.3333333333333333,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0
+      },
+      "multi_hop": {
+        "count": 5,
+        "hit_at_1": 0.4,
+        "hit_at_3": 0.6,
+        "hit_at_5": 0.6,
+        "mrr": 0.5,
+        "recall_at_1": 0.2,
+        "recall_at_3": 0.3,
+        "recall_at_5": 0.3
+      },
+      "time_sensitive": {
+        "count": 8,
+        "hit_at_1": 0.75,
+        "hit_at_3": 1.0,
+        "hit_at_5": 1.0,
+        "mrr": 0.875,
+        "recall_at_1": 0.75,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0
+      }
+    }
+  },
+  "cases": [
+    {
+      "id": "v1_001",
+      "question": "I'm looking for a hotel in Bloomington, Indiana with flexible booking options and a price range around $100 per night.  What are my options?",
+      "case_type": "time_sensitive",
+      "answerable": true,
+      "gold_document_ids": [
+        "bloomington_00000"
+      ],
+      "retrieval_ms": 5.64,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "hotels_and_accommodation.txt:ca26aa46a41594bc",
+          "document_ids": [
+            "bloomington_00000"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "hotels_and_accommodation.txt:aa0e1346f924f9da",
+          "document_ids": [
+            "bloomington_00147"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "hotels_and_accommodation.txt:9d808f568514248e",
+          "document_ids": [
+            "bloomington_00039"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "hotels_and_accommodation.txt:3316afb8f988db15",
+          "document_ids": [
+            "bloomington_00218"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "hotels_and_accommodation.txt:1b555938779aba89",
+          "document_ids": [
+            "bloomington_00257"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 1.0,
+        "hit_at_3": 1.0,
+        "hit_at_5": 1.0,
+        "mrr": 1.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0
+      }
+    },
+    {
+      "id": "v1_002",
+      "question": "What are the rates for rooms at the Fourwinds Lakeside Inn & Marina, and do they offer any packages?",
+      "case_type": "factual",
+      "answerable": true,
+      "gold_document_ids": [
+        "bloomington_00074"
+      ],
+      "retrieval_ms": 4.05,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "hotels_and_accommodation.txt:4930f2a05f00c59c",
+          "document_ids": [
+            "bloomington_00074"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "hotels_and_accommodation.txt:262c9438e85ad2dd",
+          "document_ids": [
+            "bloomington_00774"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "hotels_and_accommodation.txt:e75a843cc0ad963f",
+          "document_ids": [
+            "bloomington_00541"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "hotels_and_accommodation.txt:fe27f910f52e313c",
+          "document_ids": [
+            "bloomington_00773"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "hotels_and_accommodation.txt:65a83bc1e900813d",
+          "document_ids": [
+            "bloomington_00545"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 1.0,
+        "hit_at_3": 1.0,
+        "hit_at_5": 1.0,
+        "mrr": 1.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0
+      }
+    },
+    {
+      "id": "v1_003",
+      "question": "I need a hotel with a pool for my family. Which hotels in Bloomington offer this amenity?",
+      "case_type": "list",
+      "answerable": true,
+      "gold_document_ids": [
+        "bloomington_00136"
+      ],
+      "retrieval_ms": 4.1,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "hotels_and_accommodation.txt:bd543c70cea5970a",
+          "document_ids": [
+            "bloomington_00787"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "hotels_and_accommodation.txt:25c2b622d43e2f38",
+          "document_ids": [
+            "bloomington_00136"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "hotels_and_accommodation.txt:b1a3f5c4cd0293dd",
+          "document_ids": [
+            "bloomington_00825"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "hotels_and_accommodation.txt:15b4201aab24bf2c",
+          "document_ids": [
+            "bloomington_00378"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "hotels_and_accommodation.txt:d790ceed17031d5d",
+          "document_ids": [
+            "bloomington_00252"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 0.0,
+        "hit_at_3": 1.0,
+        "hit_at_5": 1.0,
+        "mrr": 0.5,
+        "recall_at_1": 0.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0
+      }
+    },
+    {
+      "id": "v1_004",
+      "question": "I need a hotel in Bloomington with 24-hour check-in.  Can you recommend any and explain how I can book?",
+      "case_type": "factual",
+      "answerable": true,
+      "gold_document_ids": [
+        "bloomington_00203"
+      ],
+      "retrieval_ms": 4.21,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "hotels_and_accommodation.txt:4f17dfabd3467ab6",
+          "document_ids": [
+            "bloomington_00203"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "hotels_and_accommodation.txt:043b78083ee2f165",
+          "document_ids": [
+            "bloomington_00204"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "hotels_and_accommodation.txt:0a61f47c901fab50",
+          "document_ids": [
+            "bloomington_00043"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "hotels_and_accommodation.txt:c4ba6a14e9edd9bc",
+          "document_ids": [
+            "bloomington_00379"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "hotels_and_accommodation.txt:a0df849445633997",
+          "document_ids": [],
+          "source": "hotels_and_accommodation",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 1.0,
+        "hit_at_3": 1.0,
+        "hit_at_5": 1.0,
+        "mrr": 1.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0
+      }
+    },
+    {
+      "id": "v1_005",
+      "question": "I'm looking for a budget-friendly hotel in Bloomington, IN, under $80 a night.  What options are available?",
+      "case_type": "list",
+      "answerable": true,
+      "gold_document_ids": [
+        "bloomington_00262"
+      ],
+      "retrieval_ms": 4.36,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "hotels_and_accommodation.txt:9d808f568514248e",
+          "document_ids": [
+            "bloomington_00039"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "hotels_and_accommodation.txt:3c398dd207abefb6",
+          "document_ids": [
+            "bloomington_00626"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "hotels_and_accommodation.txt:7e0879c8b362d831",
+          "document_ids": [
+            "bloomington_00262"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "hotels_and_accommodation.txt:54ab6e1fc7dd9393",
+          "document_ids": [
+            "bloomington_00161"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "hotels_and_accommodation.txt:3316afb8f988db15",
+          "document_ids": [
+            "bloomington_00218"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 0.0,
+        "hit_at_3": 1.0,
+        "hit_at_5": 1.0,
+        "mrr": 0.3333333333333333,
+        "recall_at_1": 0.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0
+      }
+    },
+    {
+      "id": "v1_006",
+      "question": "Does the Hampton Inn Bloomington offer amenities like free Wi-Fi and breakfast?",
+      "case_type": "factual",
+      "answerable": true,
+      "gold_document_ids": [
+        "bloomington_00331"
+      ],
+      "retrieval_ms": 3.87,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "hotels_and_accommodation.txt:67633f17218f3896",
+          "document_ids": [
+            "bloomington_00331"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "hotels_and_accommodation.txt:4c85b6becc2051dd",
+          "document_ids": [
+            "bloomington_00377"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "hotels_and_accommodation.txt:c7372c4a80d89967",
+          "document_ids": [],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "hotels_and_accommodation.txt:91dffd79d1c8e4f0",
+          "document_ids": [
+            "bloomington_00318"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "hotels_and_accommodation.txt:ebabe91bea600c2c",
+          "document_ids": [
+            "bloomington_00098"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 1.0,
+        "hit_at_3": 1.0,
+        "hit_at_5": 1.0,
+        "mrr": 1.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0
+      }
+    },
+    {
+      "id": "v1_007",
+      "question": "I need a pet-friendly hotel near Indiana University in Bloomington.  Are there any options within walking distance of campus?",
+      "case_type": "factual",
+      "answerable": true,
+      "gold_document_ids": [
+        "bloomington_00412"
+      ],
+      "retrieval_ms": 3.95,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "hotels_and_accommodation.txt:a4a3aa7aad562327",
+          "document_ids": [
+            "bloomington_00412"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "hotels_and_accommodation.txt:66743e73952ef650",
+          "document_ids": [
+            "bloomington_00705"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "hotels_and_accommodation.txt:26fc97e9d641ef6b",
+          "document_ids": [
+            "bloomington_00624"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "hotels_and_accommodation.txt:1c7e5d3de795818d",
+          "document_ids": [
+            "bloomington_00701"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "hotels_and_accommodation.txt:ba3a4dfede3edb6c",
+          "document_ids": [
+            "bloomington_00827"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 1.0,
+        "hit_at_3": 1.0,
+        "hit_at_5": 1.0,
+        "mrr": 1.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0
+      }
+    },
+    {
+      "id": "v1_008",
+      "question": "I'm looking for a pet-friendly B&B in Bloomington that might be suitable for a longer stay (a week).  What should I do to find out about weekly rates?",
+      "case_type": "factual",
+      "answerable": true,
+      "gold_document_ids": [
+        "bloomington_00498"
+      ],
+      "retrieval_ms": 4.44,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "hotels_and_accommodation.txt:2e0342c29c3ada86",
+          "document_ids": [
+            "bloomington_00498"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "hotels_and_accommodation.txt:5c11aaeaf12f89f1",
+          "document_ids": [
+            "bloomington_00494"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "hotels_and_accommodation.txt:0919742d1c6f2791",
+          "document_ids": [],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "hotels_and_accommodation.txt:5218dc285840e82a",
+          "document_ids": [],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "hotels_and_accommodation.txt:9b164ac15fc45a33",
+          "document_ids": [
+            "bloomington_00883"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 1.0,
+        "hit_at_3": 1.0,
+        "hit_at_5": 1.0,
+        "mrr": 1.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0
+      }
+    },
+    {
+      "id": "v1_009",
+      "question": "Are there any extended stay options in Bloomington, Indiana?",
+      "case_type": "factual",
+      "answerable": true,
+      "gold_document_ids": [
+        "bloomington_00590"
+      ],
+      "retrieval_ms": 4.21,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "hotels_and_accommodation.txt:eaf1e6fe4099129b",
+          "document_ids": [
+            "bloomington_00583"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "hotels_and_accommodation.txt:e41092ba32ed9f3c",
+          "document_ids": [
+            "bloomington_00590"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "hotels_and_accommodation.txt:6eed25af051385a4",
+          "document_ids": [],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "hotels_and_accommodation.txt:4fef6d50774fb2e0",
+          "document_ids": [
+            "bloomington_00258"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "hotels_and_accommodation.txt:a03e99d5c3b3a1a6",
+          "document_ids": [
+            "bloomington_00783"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 0.0,
+        "hit_at_3": 1.0,
+        "hit_at_5": 1.0,
+        "mrr": 0.5,
+        "recall_at_1": 0.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0
+      }
+    },
+    {
+      "id": "v1_010",
+      "question": "What is the address and contact information for the Biddle Hotel?",
+      "case_type": "factual",
+      "answerable": true,
+      "gold_document_ids": [
+        "bloomington_00692"
+      ],
+      "retrieval_ms": 3.85,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "hotels_and_accommodation.txt:bee9f4abf2a468cb",
+          "document_ids": [
+            "bloomington_00694"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "hotels_and_accommodation.txt:9abf7202308f1f32",
+          "document_ids": [
+            "bloomington_00056",
+            "bloomington_00553"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "hotels_and_accommodation.txt:0b614046863a9492",
+          "document_ids": [
+            "bloomington_00056",
+            "bloomington_00553"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "hotels_and_accommodation.txt:082d890a5eb507f9",
+          "document_ids": [
+            "bloomington_00692",
+            "bloomington_00693"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "hotels_and_accommodation.txt:d0950bad6219008d",
+          "document_ids": [
+            "bloomington_00058"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 0.0,
+        "hit_at_3": 0.0,
+        "hit_at_5": 1.0,
+        "mrr": 0.25,
+        "recall_at_1": 0.0,
+        "recall_at_3": 0.0,
+        "recall_at_5": 1.0
+      }
+    },
+    {
+      "id": "v1_011",
+      "question": "I need a hotel near the Indiana Memorial Union. What are my closest options and their approximate distances?",
+      "case_type": "factual",
+      "answerable": true,
+      "gold_document_ids": [
+        "bloomington_00789"
+      ],
+      "retrieval_ms": 3.95,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "hotels_and_accommodation.txt:c38340c616678d29",
+          "document_ids": [
+            "bloomington_00285",
+            "bloomington_00789"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "hotels_and_accommodation.txt:c2391f5d9f7c1c34",
+          "document_ids": [
+            "bloomington_00285",
+            "bloomington_00789"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "hotels_and_accommodation.txt:8f3c3f785b1996e3",
+          "document_ids": [
+            "bloomington_00793"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "hotels_and_accommodation.txt:29d1488f930565eb",
+          "document_ids": [
+            "bloomington_00287"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "hotels_and_accommodation.txt:36eba2b92271dfe1",
+          "document_ids": [
+            "bloomington_00289"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 1.0,
+        "hit_at_3": 1.0,
+        "hit_at_5": 1.0,
+        "mrr": 1.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0
+      }
+    },
+    {
+      "id": "v1_012",
+      "question": "My dog is a large breed. Are there any pet-friendly hotels in Bloomington that cater to larger dogs?",
+      "case_type": "factual",
+      "answerable": true,
+      "gold_document_ids": [
+        "bloomington_00885"
+      ],
+      "retrieval_ms": 4.19,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "hotels_and_accommodation.txt:f63b33ba39765d4e",
+          "document_ids": [
+            "bloomington_00406"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "hotels_and_accommodation.txt:1defa0544c5fce20",
+          "document_ids": [
+            "bloomington_00885"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "hotels_and_accommodation.txt:66743e73952ef650",
+          "document_ids": [
+            "bloomington_00705"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "hotels_and_accommodation.txt:86e3e5257eec1037",
+          "document_ids": [
+            "bloomington_00405"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "hotels_and_accommodation.txt:ba3a4dfede3edb6c",
+          "document_ids": [
+            "bloomington_00827"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 0.0,
+        "hit_at_3": 1.0,
+        "hit_at_5": 1.0,
+        "mrr": 0.5,
+        "recall_at_1": 0.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0
+      }
+    },
+    {
+      "id": "v1_013",
+      "question": "My parents are visiting me and need a place to stay for a week near Indiana University.  Are there any hotels or extended-stay options in the area?",
+      "case_type": "factual",
+      "answerable": true,
+      "gold_document_ids": [
+        "bloomington_00994"
+      ],
+      "retrieval_ms": 4.62,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "hotels_and_accommodation.txt:98d0607e5943f560",
+          "document_ids": [
+            "bloomington_00994"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "hotels_and_accommodation.txt:6eed25af051385a4",
+          "document_ids": [],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "hotels_and_accommodation.txt:9ba615fe9c55473e",
+          "document_ids": [],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "hotels_and_accommodation.txt:20029b30990507dd",
+          "document_ids": [
+            "bloomington_00986"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "hotels_and_accommodation.txt:9a19bf9762508b63",
+          "document_ids": [
+            "bloomington_00384"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 1.0,
+        "hit_at_3": 1.0,
+        "hit_at_5": 1.0,
+        "mrr": 1.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0
+      }
+    },
+    {
+      "id": "v1_014",
+      "question": "My family is looking for a cabin or campground rental outside of downtown Bloomington.  Where can we find options and what should we expect to pay?",
+      "case_type": "factual",
+      "answerable": true,
+      "gold_document_ids": [
+        "bloomington_00006"
+      ],
+      "retrieval_ms": 3.96,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "general_bloomington_info.txt:fdd5d4065d189d7c",
+          "document_ids": [
+            "bloomington_00006"
+          ],
+          "source": "general_bloomington_info",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "general_bloomington_info.txt:0ee98042e9228d91",
+          "document_ids": [],
+          "source": "general_bloomington_info",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "hotels_and_accommodation.txt:d4af9f6ce53b01c4",
+          "document_ids": [],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "hotels_and_accommodation.txt:b54b014a5412b019",
+          "document_ids": [],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "general_bloomington_info.txt:31c11b63bb567121",
+          "document_ids": [
+            "bloomington_00739"
+          ],
+          "source": "general_bloomington_info",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 1.0,
+        "hit_at_3": 1.0,
+        "hit_at_5": 1.0,
+        "mrr": 1.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0
+      }
+    },
+    {
+      "id": "v1_015",
+      "question": "What are the office hours for One World at Woolery Mill?",
+      "case_type": "time_sensitive",
+      "answerable": true,
+      "gold_document_ids": [
+        "bloomington_00319"
+      ],
+      "retrieval_ms": 3.77,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "general_bloomington_info.txt:04f8b21459b92de7",
+          "document_ids": [
+            "bloomington_00319",
+            "bloomington_00320"
+          ],
+          "source": "general_bloomington_info",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "hotels_and_accommodation.txt:0fa6566c3f8d77cb",
+          "document_ids": [
+            "bloomington_00323"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "hotels_and_accommodation.txt:313e9478d4a5c3dd",
+          "document_ids": [
+            "bloomington_00552"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "general_bloomington_info.txt:64a09c1ff39640f1",
+          "document_ids": [
+            "bloomington_00322",
+            "bloomington_00334"
+          ],
+          "source": "general_bloomington_info",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "hotels_and_accommodation.txt:b643ee5952c40bed",
+          "document_ids": [
+            "bloomington_00700",
+            "bloomington_00814"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 1.0,
+        "hit_at_3": 1.0,
+        "hit_at_5": 1.0,
+        "mrr": 1.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0
+      }
+    },
+    {
+      "id": "v1_016",
+      "question": "I need a resort near Bloomington for a weekend getaway; I'm interested in something with a spa. Which resorts offer that?",
+      "case_type": "factual",
+      "answerable": true,
+      "gold_document_ids": [
+        "bloomington_00449"
+      ],
+      "retrieval_ms": 3.94,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "general_bloomington_info.txt:18415180307dfd6d",
+          "document_ids": [
+            "bloomington_00449"
+          ],
+          "source": "general_bloomington_info",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "hotels_and_accommodation.txt:1979dc5de7663e94",
+          "document_ids": [
+            "bloomington_00079"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "hotels_and_accommodation.txt:154c04ad40de4d94",
+          "document_ids": [],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "general_bloomington_info.txt:2cd077da0aec7bf7",
+          "document_ids": [
+            "bloomington_00448"
+          ],
+          "source": "general_bloomington_info",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "hotels_and_accommodation.txt:39762161b74b5fee",
+          "document_ids": [
+            "bloomington_00447"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 1.0,
+        "hit_at_3": 1.0,
+        "hit_at_5": 1.0,
+        "mrr": 1.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0
+      }
+    },
+    {
+      "id": "v1_017",
+      "question": "Does The Graduate Bloomington offer any packages or deals for tourists?",
+      "case_type": "factual",
+      "answerable": true,
+      "gold_document_ids": [
+        "bloomington_00465"
+      ],
+      "retrieval_ms": 3.79,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "general_bloomington_info.txt:0d247c848895c5ae",
+          "document_ids": [
+            "bloomington_00465"
+          ],
+          "source": "general_bloomington_info",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "hotels_and_accommodation.txt:2548dd864b02dad8",
+          "document_ids": [
+            "bloomington_00127"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "hotels_and_accommodation.txt:f20ea8fbd23e54f1",
+          "document_ids": [
+            "bloomington_00461"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "hotels_and_accommodation.txt:6110399468c4cb67",
+          "document_ids": [
+            "bloomington_00424"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "hotels_and_accommodation.txt:4e44b5fa99cd704f",
+          "document_ids": [
+            "bloomington_00103"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 1.0,
+        "hit_at_3": 1.0,
+        "hit_at_5": 1.0,
+        "mrr": 1.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0
+      }
+    },
+    {
+      "id": "v1_018",
+      "question": "Where is the Super 8 by Wyndham Bloomington University Area located?",
+      "case_type": "factual",
+      "answerable": true,
+      "gold_document_ids": [
+        "bloomington_00665"
+      ],
+      "retrieval_ms": 3.72,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "general_bloomington_info.txt:de1e63aa03e2b645",
+          "document_ids": [
+            "bloomington_00263"
+          ],
+          "source": "general_bloomington_info",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "transportation.txt:91fee933812fe38b",
+          "document_ids": [],
+          "source": "transportation",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "general_bloomington_info.txt:74151630e3526373",
+          "document_ids": [
+            "bloomington_00665"
+          ],
+          "source": "general_bloomington_info",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "general_bloomington_info.txt:1844d8488f3abe39",
+          "document_ids": [
+            "bloomington_00209"
+          ],
+          "source": "general_bloomington_info",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "hotels_and_accommodation.txt:80378eba8c1589ac",
+          "document_ids": [
+            "bloomington_00212"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 0.0,
+        "hit_at_3": 1.0,
+        "hit_at_5": 1.0,
+        "mrr": 0.3333333333333333,
+        "recall_at_1": 0.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0
+      }
+    },
+    {
+      "id": "v1_019",
+      "question": "Are there any vacation rentals suitable for large groups (8+ people)?",
+      "case_type": "factual",
+      "answerable": true,
+      "gold_document_ids": [
+        "bloomington_00738"
+      ],
+      "retrieval_ms": 3.79,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "general_bloomington_info.txt:cb9ff87a138428b6",
+          "document_ids": [
+            "bloomington_00738"
+          ],
+          "source": "general_bloomington_info",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "hotels_and_accommodation.txt:73a3a4ca81ebe836",
+          "document_ids": [
+            "bloomington_00518"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "hotels_and_accommodation.txt:585588a58499e6fa",
+          "document_ids": [
+            "bloomington_00007"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "hotels_and_accommodation.txt:f9a6d4cf1b09f063",
+          "document_ids": [
+            "bloomington_00661"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "hotels_and_accommodation.txt:66640b4af7c9a42c",
+          "document_ids": [],
+          "source": "hotels_and_accommodation",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 1.0,
+        "hit_at_3": 1.0,
+        "hit_at_5": 1.0,
+        "mrr": 1.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0
+      }
+    },
+    {
+      "id": "v1_020",
+      "question": "I'm traveling with my family and need a place with amenities like a kitchen. What are my choices?",
+      "case_type": "factual",
+      "answerable": true,
+      "gold_document_ids": [
+        "bloomington_00873"
+      ],
+      "retrieval_ms": 3.9,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "general_bloomington_info.txt:e8ab2b57fe7a634b",
+          "document_ids": [
+            "bloomington_00873"
+          ],
+          "source": "general_bloomington_info",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "hotels_and_accommodation.txt:d8a400ca6f8a245b",
+          "document_ids": [
+            "bloomington_00800"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "hotels_and_accommodation.txt:05d94d3b76317651",
+          "document_ids": [
+            "bloomington_00702"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "hotels_and_accommodation.txt:14276a67990a5ccf",
+          "document_ids": [
+            "bloomington_00316"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "restaurants_and_dining.txt:6290b88d8a815284",
+          "document_ids": [
+            "bloomington_00008"
+          ],
+          "source": "restaurants_and_dining",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 1.0,
+        "hit_at_3": 1.0,
+        "hit_at_5": 1.0,
+        "mrr": 1.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0
+      }
+    },
+    {
+      "id": "v1_021",
+      "question": "How do I go about booking on-campus housing for a short visit to Bloomington?",
+      "case_type": "factual",
+      "answerable": true,
+      "gold_document_ids": [
+        "bloomington_00939"
+      ],
+      "retrieval_ms": 3.83,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "general_bloomington_info.txt:78f0c6d33649a487",
+          "document_ids": [
+            "bloomington_00939"
+          ],
+          "source": "general_bloomington_info",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "general_bloomington_info.txt:c5169596adffc23a",
+          "document_ids": [
+            "bloomington_00939"
+          ],
+          "source": "general_bloomington_info",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "general_bloomington_info.txt:c2f35ac48408c71a",
+          "document_ids": [],
+          "source": "general_bloomington_info",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "events_and_university.txt:5ebfb86afa78fc09",
+          "document_ids": [
+            "bloomington_00993"
+          ],
+          "source": "events_and_university",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "events_and_university.txt:8c0e96ca85a5a12e",
+          "document_ids": [
+            "bloomington_00952"
+          ],
+          "source": "events_and_university",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 1.0,
+        "hit_at_3": 1.0,
+        "hit_at_5": 1.0,
+        "mrr": 1.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0
+      }
+    },
+    {
+      "id": "v1_022",
+      "question": "I'm a senior citizen looking for senior-specific housing options in Bloomington, Indiana.  What resources should I explore?",
+      "case_type": "factual",
+      "answerable": true,
+      "gold_document_ids": [
+        "bloomington_00995"
+      ],
+      "retrieval_ms": 4.16,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "general_bloomington_info.txt:52e7d8a96a1fa7b7",
+          "document_ids": [
+            "bloomington_00995"
+          ],
+          "source": "general_bloomington_info",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "general_bloomington_info.txt:53f323d8a336db34",
+          "document_ids": [],
+          "source": "general_bloomington_info",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "events_and_university.txt:5ebfb86afa78fc09",
+          "document_ids": [
+            "bloomington_00993"
+          ],
+          "source": "events_and_university",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "events_and_university.txt:34a3e1a046797ea8",
+          "document_ids": [
+            "bloomington_00987"
+          ],
+          "source": "events_and_university",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "events_and_university.txt:f4c467cf97dca12c",
+          "document_ids": [
+            "bloomington_00996"
+          ],
+          "source": "events_and_university",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 1.0,
+        "hit_at_3": 1.0,
+        "hit_at_5": 1.0,
+        "mrr": 1.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0
+      }
+    },
+    {
+      "id": "v1_023",
+      "question": "I'm interested in a Bed and Breakfast experience during my visit.  Can you provide some information on locations and price ranges?",
+      "case_type": "time_sensitive",
+      "answerable": true,
+      "gold_document_ids": [
+        "bloomington_00008"
+      ],
+      "retrieval_ms": 3.89,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "restaurants_and_dining.txt:6290b88d8a815284",
+          "document_ids": [
+            "bloomington_00008"
+          ],
+          "source": "restaurants_and_dining",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "restaurants_and_dining.txt:8fce74ba31af27c4",
+          "document_ids": [
+            "bloomington_00515"
+          ],
+          "source": "restaurants_and_dining",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "restaurants_and_dining.txt:d4d7ee9447a55fa1",
+          "document_ids": [
+            "bloomington_00474"
+          ],
+          "source": "restaurants_and_dining",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "restaurants_and_dining.txt:ae58ee03e21730c5",
+          "document_ids": [
+            "bloomington_00597"
+          ],
+          "source": "restaurants_and_dining",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "restaurants_and_dining.txt:166885c1d2d27225",
+          "document_ids": [],
+          "source": "restaurants_and_dining",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 1.0,
+        "hit_at_3": 1.0,
+        "hit_at_5": 1.0,
+        "mrr": 1.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0
+      }
+    },
+    {
+      "id": "v1_024",
+      "question": "I'm looking for a bed and breakfast in Bloomington with a high rating and free parking.  Can you recommend one and tell me about its location and price range?",
+      "case_type": "time_sensitive",
+      "answerable": true,
+      "gold_document_ids": [
+        "bloomington_00471"
+      ],
+      "retrieval_ms": 4.52,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "restaurants_and_dining.txt:15e4fddc0d0f26e5",
+          "document_ids": [
+            "bloomington_00471"
+          ],
+          "source": "restaurants_and_dining",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "restaurants_and_dining.txt:147feef298fae97a",
+          "document_ids": [
+            "bloomington_00713"
+          ],
+          "source": "restaurants_and_dining",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "hotels_and_accommodation.txt:bf4b5f9a1ac84821",
+          "document_ids": [
+            "bloomington_00784"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "restaurants_and_dining.txt:0c2fe150486a9df3",
+          "document_ids": [
+            "bloomington_00466"
+          ],
+          "source": "restaurants_and_dining",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "restaurants_and_dining.txt:5ec8cd9b55ac17f4",
+          "document_ids": [
+            "bloomington_00546"
+          ],
+          "source": "restaurants_and_dining",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 1.0,
+        "hit_at_3": 1.0,
+        "hit_at_5": 1.0,
+        "mrr": 1.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0
+      }
+    },
+    {
+      "id": "v1_025",
+      "question": "Are there any bed and breakfasts in Bloomington that offer free cancellation policies?",
+      "case_type": "factual",
+      "answerable": true,
+      "gold_document_ids": [
+        "bloomington_00501"
+      ],
+      "retrieval_ms": 4.08,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "restaurants_and_dining.txt:be649bb3159af1a2",
+          "document_ids": [
+            "bloomington_00501"
+          ],
+          "source": "restaurants_and_dining",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "hotels_and_accommodation.txt:56227f8548bc9982",
+          "document_ids": [
+            "bloomington_00380"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "restaurants_and_dining.txt:e066b06dcc473bb3",
+          "document_ids": [
+            "bloomington_00548"
+          ],
+          "source": "restaurants_and_dining",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "restaurants_and_dining.txt:c67773b28ac443e6",
+          "document_ids": [
+            "bloomington_00646"
+          ],
+          "source": "restaurants_and_dining",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "hotels_and_accommodation.txt:9d5b2a7c287b39b6",
+          "document_ids": [
+            "bloomington_00111"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 1.0,
+        "hit_at_3": 1.0,
+        "hit_at_5": 1.0,
+        "mrr": 1.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0
+      }
+    },
+    {
+      "id": "v1_026",
+      "question": "Are there any luxury bed and breakfasts in Bloomington, and what would be the approximate cost?",
+      "case_type": "time_sensitive",
+      "answerable": true,
+      "gold_document_ids": [
+        "bloomington_00507"
+      ],
+      "retrieval_ms": 3.92,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "restaurants_and_dining.txt:82311c747eddfd3b",
+          "document_ids": [
+            "bloomington_00487"
+          ],
+          "source": "restaurants_and_dining",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "restaurants_and_dining.txt:cf07736213c5c33e",
+          "document_ids": [
+            "bloomington_00507"
+          ],
+          "source": "restaurants_and_dining",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "restaurants_and_dining.txt:0c2fe150486a9df3",
+          "document_ids": [
+            "bloomington_00466"
+          ],
+          "source": "restaurants_and_dining",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "restaurants_and_dining.txt:6f67cb889e95a29e",
+          "document_ids": [],
+          "source": "restaurants_and_dining",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "restaurants_and_dining.txt:81229276b79a6a67",
+          "document_ids": [],
+          "source": "restaurants_and_dining",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 0.0,
+        "hit_at_3": 1.0,
+        "hit_at_5": 1.0,
+        "mrr": 0.5,
+        "recall_at_1": 0.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0
+      }
+    },
+    {
+      "id": "v1_027",
+      "question": "Are there any bed and breakfasts in Bloomington that offer amenities like free breakfast or parking?",
+      "case_type": "factual",
+      "answerable": true,
+      "gold_document_ids": [
+        "bloomington_00548"
+      ],
+      "retrieval_ms": 3.81,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "restaurants_and_dining.txt:e066b06dcc473bb3",
+          "document_ids": [
+            "bloomington_00548"
+          ],
+          "source": "restaurants_and_dining",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "restaurants_and_dining.txt:15e4fddc0d0f26e5",
+          "document_ids": [
+            "bloomington_00471"
+          ],
+          "source": "restaurants_and_dining",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "restaurants_and_dining.txt:50cb68a9bb2aa218",
+          "document_ids": [
+            "bloomington_00714"
+          ],
+          "source": "restaurants_and_dining",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "restaurants_and_dining.txt:147feef298fae97a",
+          "document_ids": [
+            "bloomington_00713"
+          ],
+          "source": "restaurants_and_dining",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "restaurants_and_dining.txt:c67773b28ac443e6",
+          "document_ids": [
+            "bloomington_00646"
+          ],
+          "source": "restaurants_and_dining",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 1.0,
+        "hit_at_3": 1.0,
+        "hit_at_5": 1.0,
+        "mrr": 1.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0
+      }
+    },
+    {
+      "id": "v1_028",
+      "question": "I'm looking for a bed and breakfast near Deelsville Church. Can you provide more information on its location, pricing, and amenities?",
+      "case_type": "factual",
+      "answerable": true,
+      "gold_document_ids": [
+        "bloomington_00669"
+      ],
+      "retrieval_ms": 3.96,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "restaurants_and_dining.txt:588dd0f46994d772",
+          "document_ids": [
+            "bloomington_00669"
+          ],
+          "source": "restaurants_and_dining",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "restaurants_and_dining.txt:6290b88d8a815284",
+          "document_ids": [
+            "bloomington_00008"
+          ],
+          "source": "restaurants_and_dining",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "restaurants_and_dining.txt:ae58ee03e21730c5",
+          "document_ids": [
+            "bloomington_00597"
+          ],
+          "source": "restaurants_and_dining",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "restaurants_and_dining.txt:696531b382cd0059",
+          "document_ids": [
+            "bloomington_00762"
+          ],
+          "source": "restaurants_and_dining",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "restaurants_and_dining.txt:166885c1d2d27225",
+          "document_ids": [],
+          "source": "restaurants_and_dining",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 1.0,
+        "hit_at_3": 1.0,
+        "hit_at_5": 1.0,
+        "mrr": 1.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0
+      }
+    },
+    {
+      "id": "v1_029",
+      "question": "What's the name of a bed and breakfast near the Indiana Memorial Union?",
+      "case_type": "factual",
+      "answerable": true,
+      "gold_document_ids": [
+        "bloomington_00790"
+      ],
+      "retrieval_ms": 3.74,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "restaurants_and_dining.txt:d110617ce113d6e7",
+          "document_ids": [
+            "bloomington_00790"
+          ],
+          "source": "restaurants_and_dining",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "restaurants_and_dining.txt:23abd227713b7624",
+          "document_ids": [
+            "bloomington_00288"
+          ],
+          "source": "restaurants_and_dining",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "hotels_and_accommodation.txt:36eba2b92271dfe1",
+          "document_ids": [
+            "bloomington_00289"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "restaurants_and_dining.txt:15280692d7a2e02b",
+          "document_ids": [
+            "bloomington_00674"
+          ],
+          "source": "restaurants_and_dining",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "restaurants_and_dining.txt:696531b382cd0059",
+          "document_ids": [
+            "bloomington_00762"
+          ],
+          "source": "restaurants_and_dining",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 1.0,
+        "hit_at_3": 1.0,
+        "hit_at_5": 1.0,
+        "mrr": 1.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0
+      }
+    },
+    {
+      "id": "v1_030",
+      "question": "How close is the Super 8 by Wyndham Bloomington University Area to Indiana University and downtown Bloomington?",
+      "case_type": "factual",
+      "answerable": true,
+      "gold_document_ids": [
+        "bloomington_00168"
+      ],
+      "retrieval_ms": 4.45,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "events_and_university.txt:0ccc359613778144",
+          "document_ids": [
+            "bloomington_00168"
+          ],
+          "source": "events_and_university",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "general_bloomington_info.txt:de1e63aa03e2b645",
+          "document_ids": [
+            "bloomington_00263"
+          ],
+          "source": "general_bloomington_info",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "transportation.txt:91fee933812fe38b",
+          "document_ids": [],
+          "source": "transportation",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "hotels_and_accommodation.txt:80378eba8c1589ac",
+          "document_ids": [
+            "bloomington_00212"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "general_bloomington_info.txt:74151630e3526373",
+          "document_ids": [
+            "bloomington_00665"
+          ],
+          "source": "general_bloomington_info",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 1.0,
+        "hit_at_3": 1.0,
+        "hit_at_5": 1.0,
+        "mrr": 1.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0
+      }
+    },
+    {
+      "id": "v1_031",
+      "question": "My daughter is a current IU Bloomington student and needs housing for the Spring semester.  Where can she find information on applying for spring housing?",
+      "case_type": "factual",
+      "answerable": true,
+      "gold_document_ids": [
+        "bloomington_00916"
+      ],
+      "retrieval_ms": 4.05,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "events_and_university.txt:517f83ac126f8e8d",
+          "document_ids": [
+            "bloomington_00916"
+          ],
+          "source": "events_and_university",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "weather_and_seasons.txt:76e2cf2c4c63464c",
+          "document_ids": [
+            "bloomington_00913"
+          ],
+          "source": "weather_and_seasons",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "events_and_university.txt:5ebfb86afa78fc09",
+          "document_ids": [
+            "bloomington_00993"
+          ],
+          "source": "events_and_university",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "hotels_and_accommodation.txt:ec6a490a77181e43",
+          "document_ids": [
+            "bloomington_00915"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "general_bloomington_info.txt:52e7d8a96a1fa7b7",
+          "document_ids": [
+            "bloomington_00995"
+          ],
+          "source": "general_bloomington_info",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 1.0,
+        "hit_at_3": 1.0,
+        "hit_at_5": 1.0,
+        "mrr": 1.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0
+      }
+    },
+    {
+      "id": "v1_032",
+      "question": "What is the typical process for renting off-campus housing near Indiana University?",
+      "case_type": "factual",
+      "answerable": true,
+      "gold_document_ids": [
+        "bloomington_00922"
+      ],
+      "retrieval_ms": 3.82,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "events_and_university.txt:dc0dac52a3b9da18",
+          "document_ids": [
+            "bloomington_00922"
+          ],
+          "source": "events_and_university",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "events_and_university.txt:c935cc223f132431",
+          "document_ids": [],
+          "source": "events_and_university",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "events_and_university.txt:34a3e1a046797ea8",
+          "document_ids": [
+            "bloomington_00987"
+          ],
+          "source": "events_and_university",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "general_bloomington_info.txt:c2f35ac48408c71a",
+          "document_ids": [],
+          "source": "general_bloomington_info",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "events_and_university.txt:900e6b3c06abb6e1",
+          "document_ids": [
+            "bloomington_00920"
+          ],
+          "source": "events_and_university",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 1.0,
+        "hit_at_3": 1.0,
+        "hit_at_5": 1.0,
+        "mrr": 1.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0
+      }
+    },
+    {
+      "id": "v1_033",
+      "question": "What should I consider when looking for off-campus housing near IU Bloomington for a semester?",
+      "case_type": "factual",
+      "answerable": true,
+      "gold_document_ids": [
+        "bloomington_00935"
+      ],
+      "retrieval_ms": 4.11,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "events_and_university.txt:6f597b65020a9ced",
+          "document_ids": [
+            "bloomington_00935"
+          ],
+          "source": "events_and_university",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "events_and_university.txt:b064e2344f2c5c57",
+          "document_ids": [],
+          "source": "events_and_university",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "events_and_university.txt:5ebfb86afa78fc09",
+          "document_ids": [
+            "bloomington_00993"
+          ],
+          "source": "events_and_university",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "events_and_university.txt:34a3e1a046797ea8",
+          "document_ids": [
+            "bloomington_00987"
+          ],
+          "source": "events_and_university",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "events_and_university.txt:f4c467cf97dca12c",
+          "document_ids": [
+            "bloomington_00996"
+          ],
+          "source": "events_and_university",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 1.0,
+        "hit_at_3": 1.0,
+        "hit_at_5": 1.0,
+        "mrr": 1.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0
+      }
+    },
+    {
+      "id": "v1_034",
+      "question": "I'm a student visiting IU Bloomington and need student housing near campus.  What are the options and price ranges for Evolve Bloomington?",
+      "case_type": "time_sensitive",
+      "answerable": true,
+      "gold_document_ids": [
+        "bloomington_00972"
+      ],
+      "retrieval_ms": 4.15,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "events_and_university.txt:15399fca108ac1e7",
+          "document_ids": [
+            "bloomington_00972"
+          ],
+          "source": "events_and_university",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "events_and_university.txt:eeb8998502d7de7d",
+          "document_ids": [],
+          "source": "events_and_university",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "general_bloomington_info.txt:1d210f1f8ffb82f6",
+          "document_ids": [
+            "bloomington_00959"
+          ],
+          "source": "general_bloomington_info",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "events_and_university.txt:8c0e96ca85a5a12e",
+          "document_ids": [
+            "bloomington_00952"
+          ],
+          "source": "events_and_university",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "events_and_university.txt:b064e2344f2c5c57",
+          "document_ids": [],
+          "source": "events_and_university",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 1.0,
+        "hit_at_3": 1.0,
+        "hit_at_5": 1.0,
+        "mrr": 1.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0
+      }
+    },
+    {
+      "id": "v1_035",
+      "question": "Are there any affordable housing options available near IU Bloomington for individuals on a tight budget?",
+      "case_type": "time_sensitive",
+      "answerable": true,
+      "gold_document_ids": [
+        "bloomington_00996"
+      ],
+      "retrieval_ms": 3.85,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "events_and_university.txt:f4c467cf97dca12c",
+          "document_ids": [
+            "bloomington_00996"
+          ],
+          "source": "events_and_university",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "events_and_university.txt:ab29a5aa35b16fa8",
+          "document_ids": [],
+          "source": "events_and_university",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "general_bloomington_info.txt:1d210f1f8ffb82f6",
+          "document_ids": [
+            "bloomington_00959"
+          ],
+          "source": "general_bloomington_info",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "general_bloomington_info.txt:961045af0cb1a5bd",
+          "document_ids": [
+            "bloomington_00958"
+          ],
+          "source": "general_bloomington_info",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "events_and_university.txt:6f597b65020a9ced",
+          "document_ids": [
+            "bloomington_00935"
+          ],
+          "source": "events_and_university",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 1.0,
+        "hit_at_3": 1.0,
+        "hit_at_5": 1.0,
+        "mrr": 1.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0
+      }
+    },
+    {
+      "id": "v1_036",
+      "question": "What's the address of the Hyatt Place Bloomington, and is there convenient parking?",
+      "case_type": "factual",
+      "answerable": true,
+      "gold_document_ids": [
+        "bloomington_00053"
+      ],
+      "retrieval_ms": 3.82,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "attractions_and_entertainment.txt:4c8890c0e2ccf396",
+          "document_ids": [
+            "bloomington_00053"
+          ],
+          "source": "attractions_and_entertainment",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "hotels_and_accommodation.txt:a84474306a7fe3d7",
+          "document_ids": [
+            "bloomington_00052"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "transportation.txt:3d63dbb4c408b134",
+          "document_ids": [
+            "bloomington_00443"
+          ],
+          "source": "transportation",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "general_bloomington_info.txt:e46677102b7023ad",
+          "document_ids": [
+            "bloomington_00393"
+          ],
+          "source": "general_bloomington_info",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "hotels_and_accommodation.txt:64c45700468a04c9",
+          "document_ids": [],
+          "source": "hotels_and_accommodation",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 1.0,
+        "hit_at_3": 1.0,
+        "hit_at_5": 1.0,
+        "mrr": 1.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0
+      }
+    },
+    {
+      "id": "v1_037",
+      "question": "Are there any vacation rentals in Bloomington that are particularly suitable for guests with pets?",
+      "case_type": "factual",
+      "answerable": true,
+      "gold_document_ids": [
+        "bloomington_00802"
+      ],
+      "retrieval_ms": 3.75,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "hotels_and_accommodation.txt:66743e73952ef650",
+          "document_ids": [
+            "bloomington_00705"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "attractions_and_entertainment.txt:e5dfcd92e61ab8b6",
+          "document_ids": [
+            "bloomington_00802"
+          ],
+          "source": "attractions_and_entertainment",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "hotels_and_accommodation.txt:ba3a4dfede3edb6c",
+          "document_ids": [
+            "bloomington_00827"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "hotels_and_accommodation.txt:7475055ee6c9c704",
+          "document_ids": [
+            "bloomington_00413"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "hotels_and_accommodation.txt:fadaf67fb5851434",
+          "document_ids": [
+            "bloomington_00409"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 0.0,
+        "hit_at_3": 1.0,
+        "hit_at_5": 1.0,
+        "mrr": 0.5,
+        "recall_at_1": 0.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0
+      }
+    },
+    {
+      "id": "v1_038",
+      "question": "I'm a PhD student at IU Bloomington and need housing.  What are my options besides university-owned apartments?",
+      "case_type": "factual",
+      "answerable": true,
+      "gold_document_ids": [
+        "bloomington_00943"
+      ],
+      "retrieval_ms": 3.99,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "attractions_and_entertainment.txt:02801fcb2c12db24",
+          "document_ids": [
+            "bloomington_00943"
+          ],
+          "source": "attractions_and_entertainment",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "events_and_university.txt:ab29a5aa35b16fa8",
+          "document_ids": [],
+          "source": "events_and_university",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "events_and_university.txt:b064e2344f2c5c57",
+          "document_ids": [],
+          "source": "events_and_university",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "events_and_university.txt:6f597b65020a9ced",
+          "document_ids": [
+            "bloomington_00935"
+          ],
+          "source": "events_and_university",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "events_and_university.txt:f4c467cf97dca12c",
+          "document_ids": [
+            "bloomington_00996"
+          ],
+          "source": "events_and_university",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 1.0,
+        "hit_at_3": 1.0,
+        "hit_at_5": 1.0,
+        "mrr": 1.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0
+      }
+    },
+    {
+      "id": "v1_039",
+      "question": "My family is visiting Bloomington for a month and needs a larger rental property.  Where should I start my search?",
+      "case_type": "factual",
+      "answerable": true,
+      "gold_document_ids": [
+        "bloomington_00960"
+      ],
+      "retrieval_ms": 3.81,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "attractions_and_entertainment.txt:7c72422eddd53a52",
+          "document_ids": [
+            "bloomington_00960"
+          ],
+          "source": "attractions_and_entertainment",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "general_bloomington_info.txt:fdd5d4065d189d7c",
+          "document_ids": [
+            "bloomington_00006"
+          ],
+          "source": "general_bloomington_info",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "hotels_and_accommodation.txt:20220f560fc4f51d",
+          "document_ids": [
+            "bloomington_00969"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "hotels_and_accommodation.txt:608453d5d471cdb4",
+          "document_ids": [
+            "bloomington_00582"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "hotels_and_accommodation.txt:ca7679702d43116c",
+          "document_ids": [
+            "bloomington_00219"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 1.0,
+        "hit_at_3": 1.0,
+        "hit_at_5": 1.0,
+        "mrr": 1.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0
+      }
+    },
+    {
+      "id": "v1_040",
+      "question": "What is the location of IU Bloomington Apartments State on Campus relative to Indiana University Bloomington?",
+      "case_type": "factual",
+      "answerable": true,
+      "gold_document_ids": [
+        "bloomington_00999"
+      ],
+      "retrieval_ms": 3.74,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "attractions_and_entertainment.txt:3b12890735a23f51",
+          "document_ids": [
+            "bloomington_00999"
+          ],
+          "source": "attractions_and_entertainment",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "events_and_university.txt:eeb8998502d7de7d",
+          "document_ids": [],
+          "source": "events_and_university",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "events_and_university.txt:edef591e2da514fd",
+          "document_ids": [],
+          "source": "events_and_university",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "attractions_and_entertainment.txt:d746e1598824089a",
+          "document_ids": [
+            "bloomington_00942"
+          ],
+          "source": "attractions_and_entertainment",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "attractions_and_entertainment.txt:248c615dd0386675",
+          "document_ids": [
+            "bloomington_00956"
+          ],
+          "source": "attractions_and_entertainment",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 1.0,
+        "hit_at_3": 1.0,
+        "hit_at_5": 1.0,
+        "mrr": 1.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0
+      }
+    },
+    {
+      "id": "v1_041",
+      "question": "How can I contact Board and Brush Bloomington to inquire about booking a workshop?",
+      "case_type": "factual",
+      "answerable": true,
+      "gold_document_ids": [
+        "bloomington_00758"
+      ],
+      "retrieval_ms": 3.75,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "shopping.txt:88f3daa9dcc6f3e9",
+          "document_ids": [
+            "bloomington_00758"
+          ],
+          "source": "shopping",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "shopping.txt:848f6f1054a8cf0c",
+          "document_ids": [
+            "bloomington_00759"
+          ],
+          "source": "shopping",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "general_bloomington_info.txt:8ae381fc2f769138",
+          "document_ids": [
+            "bloomington_00757"
+          ],
+          "source": "general_bloomington_info",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "attractions_and_entertainment.txt:69583e88f4482773",
+          "document_ids": [
+            "bloomington_00761"
+          ],
+          "source": "attractions_and_entertainment",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "attractions_and_entertainment.txt:f93bf99c19a71af8",
+          "document_ids": [
+            "bloomington_00954"
+          ],
+          "source": "attractions_and_entertainment",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 1.0,
+        "hit_at_3": 1.0,
+        "hit_at_5": 1.0,
+        "mrr": 1.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0
+      }
+    },
+    {
+      "id": "v1_042",
+      "question": "What is the approximate cost of a workshop at Board and Brush Bloomington?",
+      "case_type": "time_sensitive",
+      "answerable": true,
+      "gold_document_ids": [
+        "bloomington_00760"
+      ],
+      "retrieval_ms": 3.68,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "shopping.txt:88f3daa9dcc6f3e9",
+          "document_ids": [
+            "bloomington_00758"
+          ],
+          "source": "shopping",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "shopping.txt:7d3dc7c63dee2343",
+          "document_ids": [
+            "bloomington_00760"
+          ],
+          "source": "shopping",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "shopping.txt:848f6f1054a8cf0c",
+          "document_ids": [
+            "bloomington_00759"
+          ],
+          "source": "shopping",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "hotels_and_accommodation.txt:b93cf251797e62f6",
+          "document_ids": [
+            "bloomington_00823"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "hotels_and_accommodation.txt:2c922befbd637100",
+          "document_ids": [],
+          "source": "hotels_and_accommodation",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 0.0,
+        "hit_at_3": 1.0,
+        "hit_at_5": 1.0,
+        "mrr": 0.5,
+        "recall_at_1": 0.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0
+      }
+    },
+    {
+      "id": "v1_043",
+      "question": "What is the location of the Super 8 by Wyndham Bloomington University Area and how can I get there from the Bloomington airport?",
+      "case_type": "factual",
+      "answerable": true,
+      "gold_document_ids": [
+        "bloomington_00164"
+      ],
+      "retrieval_ms": 4.37,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "transportation.txt:91fee933812fe38b",
+          "document_ids": [],
+          "source": "transportation",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "transportation.txt:d2e9d6a6fdb598a4",
+          "document_ids": [
+            "bloomington_00164"
+          ],
+          "source": "transportation",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "general_bloomington_info.txt:de1e63aa03e2b645",
+          "document_ids": [
+            "bloomington_00263"
+          ],
+          "source": "general_bloomington_info",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "general_bloomington_info.txt:74151630e3526373",
+          "document_ids": [
+            "bloomington_00665"
+          ],
+          "source": "general_bloomington_info",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "general_bloomington_info.txt:1844d8488f3abe39",
+          "document_ids": [
+            "bloomington_00209"
+          ],
+          "source": "general_bloomington_info",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 0.0,
+        "hit_at_3": 1.0,
+        "hit_at_5": 1.0,
+        "mrr": 0.5,
+        "recall_at_1": 0.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0
+      }
+    },
+    {
+      "id": "v1_044",
+      "question": "What is the address of the Hyatt Place Bloomington, and how can I get there from the Bloomington airport?",
+      "case_type": "factual",
+      "answerable": true,
+      "gold_document_ids": [
+        "bloomington_00443"
+      ],
+      "retrieval_ms": 3.94,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "transportation.txt:3d63dbb4c408b134",
+          "document_ids": [
+            "bloomington_00443"
+          ],
+          "source": "transportation",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "hotels_and_accommodation.txt:347497aa550439a7",
+          "document_ids": [],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "general_bloomington_info.txt:e46677102b7023ad",
+          "document_ids": [
+            "bloomington_00393"
+          ],
+          "source": "general_bloomington_info",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "hotels_and_accommodation.txt:a84474306a7fe3d7",
+          "document_ids": [
+            "bloomington_00052"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "attractions_and_entertainment.txt:4c8890c0e2ccf396",
+          "document_ids": [
+            "bloomington_00053"
+          ],
+          "source": "attractions_and_entertainment",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 1.0,
+        "hit_at_3": 1.0,
+        "hit_at_5": 1.0,
+        "mrr": 1.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0
+      }
+    },
+    {
+      "id": "v1_045",
+      "question": "I'm looking for on-campus housing for my niece during the summer. What options are available, and what's the process for applying?",
+      "case_type": "list",
+      "answerable": true,
+      "gold_document_ids": [
+        "bloomington_00913"
+      ],
+      "retrieval_ms": 4.0,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "weather_and_seasons.txt:76e2cf2c4c63464c",
+          "document_ids": [
+            "bloomington_00913"
+          ],
+          "source": "weather_and_seasons",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "events_and_university.txt:517f83ac126f8e8d",
+          "document_ids": [
+            "bloomington_00916"
+          ],
+          "source": "events_and_university",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "hotels_and_accommodation.txt:ec6a490a77181e43",
+          "document_ids": [
+            "bloomington_00915"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "events_and_university.txt:5ebfb86afa78fc09",
+          "document_ids": [
+            "bloomington_00993"
+          ],
+          "source": "events_and_university",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "events_and_university.txt:34a3e1a046797ea8",
+          "document_ids": [
+            "bloomington_00987"
+          ],
+          "source": "events_and_university",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 1.0,
+        "hit_at_3": 1.0,
+        "hit_at_5": 1.0,
+        "mrr": 1.0,
+        "recall_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0
+      }
+    },
+    {
+      "id": "v1_046",
+      "question": "What does a room at Graduate Bloomington cost, where is the hotel, and is it easy to get around from there?",
+      "case_type": "multi_hop",
+      "answerable": true,
+      "gold_document_ids": [
+        "bloomington_00063",
+        "bloomington_00463"
+      ],
+      "retrieval_ms": 4.15,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "hotels_and_accommodation.txt:d341118e16c0f8dd",
+          "document_ids": [
+            "bloomington_00063"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "hotels_and_accommodation.txt:0b958d9e7812f89a",
+          "document_ids": [
+            "bloomington_00344"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "hotels_and_accommodation.txt:c6222737eb37d3a3",
+          "document_ids": [],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "hotels_and_accommodation.txt:bab82ffee1b8e6f7",
+          "document_ids": [
+            "bloomington_00641"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "hotels_and_accommodation.txt:f20ea8fbd23e54f1",
+          "document_ids": [
+            "bloomington_00461"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 1.0,
+        "hit_at_3": 1.0,
+        "hit_at_5": 1.0,
+        "mrr": 1.0,
+        "recall_at_1": 0.5,
+        "recall_at_3": 0.5,
+        "recall_at_5": 0.5
+      }
+    },
+    {
+      "id": "v1_047",
+      "question": "Suggest a budget hotel near IU and explain how close the Super 8 is to both campus and downtown.",
+      "case_type": "multi_hop",
+      "answerable": true,
+      "gold_document_ids": [
+        "bloomington_00119",
+        "bloomington_00168"
+      ],
+      "retrieval_ms": 3.91,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "hotels_and_accommodation.txt:80378eba8c1589ac",
+          "document_ids": [
+            "bloomington_00212"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "events_and_university.txt:0ccc359613778144",
+          "document_ids": [
+            "bloomington_00168"
+          ],
+          "source": "events_and_university",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "hotels_and_accommodation.txt:1041cb847f04862a",
+          "document_ids": [
+            "bloomington_00208"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "hotels_and_accommodation.txt:27008ec1fd9ed337",
+          "document_ids": [
+            "bloomington_00005"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "hotels_and_accommodation.txt:c7fa4a271777fbd7",
+          "document_ids": [
+            "bloomington_00664"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 0.0,
+        "hit_at_3": 1.0,
+        "hit_at_5": 1.0,
+        "mrr": 0.5,
+        "recall_at_1": 0.0,
+        "recall_at_3": 0.5,
+        "recall_at_5": 0.5
+      }
+    },
+    {
+      "id": "v1_048",
+      "question": "Compare cabin or campground options outside downtown with family resorts near Bloomington, including likely prices and amenities.",
+      "case_type": "multi_hop",
+      "answerable": true,
+      "gold_document_ids": [
+        "bloomington_00006",
+        "bloomington_00448"
+      ],
+      "retrieval_ms": 3.83,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "general_bloomington_info.txt:fdd5d4065d189d7c",
+          "document_ids": [
+            "bloomington_00006"
+          ],
+          "source": "general_bloomington_info",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "general_bloomington_info.txt:8651adc0021705fa",
+          "document_ids": [
+            "bloomington_00662"
+          ],
+          "source": "general_bloomington_info",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "hotels_and_accommodation.txt:b54b014a5412b019",
+          "document_ids": [],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "hotels_and_accommodation.txt:bf0a5c1cfdd09bdc",
+          "document_ids": [],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "hotels_and_accommodation.txt:c38febe5ef2d9773",
+          "document_ids": [
+            "bloomington_00010"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 1.0,
+        "hit_at_3": 1.0,
+        "hit_at_5": 1.0,
+        "mrr": 1.0,
+        "recall_at_1": 0.5,
+        "recall_at_3": 0.5,
+        "recall_at_5": 0.5
+      }
+    },
+    {
+      "id": "v1_049",
+      "question": "What do Bloomington bed and breakfasts usually cost, and can any accommodate a group of six adults?",
+      "case_type": "multi_hop",
+      "answerable": true,
+      "gold_document_ids": [
+        "bloomington_00500",
+        "bloomington_00513"
+      ],
+      "retrieval_ms": 3.85,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "restaurants_and_dining.txt:0c2fe150486a9df3",
+          "document_ids": [
+            "bloomington_00466"
+          ],
+          "source": "restaurants_and_dining",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "restaurants_and_dining.txt:6f67cb889e95a29e",
+          "document_ids": [],
+          "source": "restaurants_and_dining",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "hotels_and_accommodation.txt:2dbe21b4939b06ec",
+          "document_ids": [
+            "bloomington_00711"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "restaurants_and_dining.txt:82311c747eddfd3b",
+          "document_ids": [
+            "bloomington_00487"
+          ],
+          "source": "restaurants_and_dining",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "restaurants_and_dining.txt:81229276b79a6a67",
+          "document_ids": [],
+          "source": "restaurants_and_dining",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 0.0,
+        "hit_at_3": 0.0,
+        "hit_at_5": 0.0,
+        "mrr": 0.0,
+        "recall_at_1": 0.0,
+        "recall_at_3": 0.0,
+        "recall_at_5": 0.0
+      }
+    },
+    {
+      "id": "v1_050",
+      "question": "What should I consider when choosing off-campus IU housing, and how can I find a long-term rental for several months?",
+      "case_type": "multi_hop",
+      "answerable": true,
+      "gold_document_ids": [
+        "bloomington_00921",
+        "bloomington_00925"
+      ],
+      "retrieval_ms": 3.84,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "events_and_university.txt:6f597b65020a9ced",
+          "document_ids": [
+            "bloomington_00935"
+          ],
+          "source": "events_and_university",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "attractions_and_entertainment.txt:dc518e96c1ed89ce",
+          "document_ids": [],
+          "source": "attractions_and_entertainment",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "general_bloomington_info.txt:961045af0cb1a5bd",
+          "document_ids": [
+            "bloomington_00958"
+          ],
+          "source": "general_bloomington_info",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "events_and_university.txt:b064e2344f2c5c57",
+          "document_ids": [],
+          "source": "events_and_university",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "hotels_and_accommodation.txt:b91212b5149eae45",
+          "document_ids": [
+            "bloomington_00931"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 0.0,
+        "hit_at_3": 0.0,
+        "hit_at_5": 0.0,
+        "mrr": 0.0,
+        "recall_at_1": 0.0,
+        "recall_at_3": 0.0,
+        "recall_at_5": 0.0
+      }
+    },
+    {
+      "id": "unanswerable_001",
+      "question": "What concerts are happening in Bloomington tonight?",
+      "case_type": "time_sensitive",
+      "answerable": false,
+      "gold_document_ids": [],
+      "retrieval_ms": 4.19,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "hotels_and_accommodation.txt:ffea0474079509d3",
+          "document_ids": [
+            "bloomington_00858"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "hotels_and_accommodation.txt:3d8e445156faae84",
+          "document_ids": [
+            "bloomington_00715"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "hotels_and_accommodation.txt:9a01955db8bf7677",
+          "document_ids": [
+            "bloomington_00558"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "restaurants_and_dining.txt:6a2e4890e5a904ca",
+          "document_ids": [],
+          "source": "restaurants_and_dining",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "hotels_and_accommodation.txt:03e081cbf73d91af",
+          "document_ids": [
+            "bloomington_00850"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 0.0,
+        "hit_at_3": 0.0,
+        "hit_at_5": 0.0,
+        "mrr": 0.0,
+        "recall_at_1": 0.0,
+        "recall_at_3": 0.0,
+        "recall_at_5": 0.0
+      }
+    },
+    {
+      "id": "unanswerable_002",
+      "question": "What is the current wait time at FARMbloomington?",
+      "case_type": "time_sensitive",
+      "answerable": false,
+      "gold_document_ids": [],
+      "retrieval_ms": 4.73,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "general_bloomington_info.txt:10dd307d6748971e",
+          "document_ids": [
+            "bloomington_00522"
+          ],
+          "source": "general_bloomington_info",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "general_bloomington_info.txt:be3f26f44bd3a91f",
+          "document_ids": [
+            "bloomington_00167"
+          ],
+          "source": "general_bloomington_info",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "general_bloomington_info.txt:04f8b21459b92de7",
+          "document_ids": [
+            "bloomington_00319",
+            "bloomington_00320"
+          ],
+          "source": "general_bloomington_info",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "general_bloomington_info.txt:f560397a11a427c2",
+          "document_ids": [
+            "bloomington_00366"
+          ],
+          "source": "general_bloomington_info",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "hotels_and_accommodation.txt:e8aa7cf5cba920c2",
+          "document_ids": [
+            "bloomington_00226"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 0.0,
+        "hit_at_3": 0.0,
+        "hit_at_5": 0.0,
+        "mrr": 0.0,
+        "recall_at_1": 0.0,
+        "recall_at_3": 0.0,
+        "recall_at_5": 0.0
+      }
+    },
+    {
+      "id": "unanswerable_003",
+      "question": "Is the next Bloomington Transit bus running late right now?",
+      "case_type": "time_sensitive",
+      "answerable": false,
+      "gold_document_ids": [],
+      "retrieval_ms": 3.72,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "hotels_and_accommodation.txt:ff9862b409dd902d",
+          "document_ids": [],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "transportation.txt:3b2335ce64d5d1bf",
+          "document_ids": [],
+          "source": "transportation",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "hotels_and_accommodation.txt:347497aa550439a7",
+          "document_ids": [],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "transportation.txt:d2e9d6a6fdb598a4",
+          "document_ids": [
+            "bloomington_00164"
+          ],
+          "source": "transportation",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "events_and_university.txt:990475a11137f410",
+          "document_ids": [
+            "bloomington_00974"
+          ],
+          "source": "events_and_university",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 0.0,
+        "hit_at_3": 0.0,
+        "hit_at_5": 0.0,
+        "mrr": 0.0,
+        "recall_at_1": 0.0,
+        "recall_at_3": 0.0,
+        "recall_at_5": 0.0
+      }
+    },
+    {
+      "id": "unanswerable_004",
+      "question": "What will the exact weather be at 3 PM tomorrow?",
+      "case_type": "time_sensitive",
+      "answerable": false,
+      "gold_document_ids": [],
+      "retrieval_ms": 4.02,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "hotels_and_accommodation.txt:f558f0b8ce7349cf",
+          "document_ids": [
+            "bloomington_00078"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "hotels_and_accommodation.txt:3e9fc43675e4cbb2",
+          "document_ids": [
+            "bloomington_00544"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "hotels_and_accommodation.txt:be49712edfbd4003",
+          "document_ids": [
+            "bloomington_00145"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "restaurants_and_dining.txt:55be4b6edcf70817",
+          "document_ids": [],
+          "source": "restaurants_and_dining",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "hotels_and_accommodation.txt:49ae4026221f0c68",
+          "document_ids": [
+            "bloomington_00361"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 0.0,
+        "hit_at_3": 0.0,
+        "hit_at_5": 0.0,
+        "mrr": 0.0,
+        "recall_at_1": 0.0,
+        "recall_at_3": 0.0,
+        "recall_at_5": 0.0
+      }
+    },
+    {
+      "id": "unanswerable_005",
+      "question": "Can you book a room at the Graduate Bloomington for me?",
+      "case_type": "out_of_scope",
+      "answerable": false,
+      "gold_document_ids": [],
+      "retrieval_ms": 3.89,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "general_bloomington_info.txt:78f0c6d33649a487",
+          "document_ids": [
+            "bloomington_00939"
+          ],
+          "source": "general_bloomington_info",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "hotels_and_accommodation.txt:0b958d9e7812f89a",
+          "document_ids": [
+            "bloomington_00344"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "hotels_and_accommodation.txt:afd1c1885ba1ea6c",
+          "document_ids": [
+            "bloomington_00629"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "hotels_and_accommodation.txt:dde17cf20e5d1640",
+          "document_ids": [
+            "bloomington_00061"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "hotels_and_accommodation.txt:1a8bf3c9dbad8923",
+          "document_ids": [
+            "bloomington_00214"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 0.0,
+        "hit_at_3": 0.0,
+        "hit_at_5": 0.0,
+        "mrr": 0.0,
+        "recall_at_1": 0.0,
+        "recall_at_3": 0.0,
+        "recall_at_5": 0.0
+      }
+    },
+    {
+      "id": "unanswerable_006",
+      "question": "What is my Indiana University student account balance?",
+      "case_type": "out_of_scope",
+      "answerable": false,
+      "gold_document_ids": [],
+      "retrieval_ms": 3.69,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "hotels_and_accommodation.txt:e0eb52ff55398ffa",
+          "document_ids": [],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "hotels_and_accommodation.txt:9243d64a69b452e5",
+          "document_ids": [],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "hotels_and_accommodation.txt:c6222737eb37d3a3",
+          "document_ids": [],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "hotels_and_accommodation.txt:4fb18499c5b2cce6",
+          "document_ids": [
+            "bloomington_00927"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "hotels_and_accommodation.txt:e6bd92c419de7dc3",
+          "document_ids": [],
+          "source": "hotels_and_accommodation",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 0.0,
+        "hit_at_3": 0.0,
+        "hit_at_5": 0.0,
+        "mrr": 0.0,
+        "recall_at_1": 0.0,
+        "recall_at_3": 0.0,
+        "recall_at_5": 0.0
+      }
+    },
+    {
+      "id": "unanswerable_007",
+      "question": "Who is currently sitting at the mayor's desk?",
+      "case_type": "out_of_scope",
+      "answerable": false,
+      "gold_document_ids": [],
+      "retrieval_ms": 3.67,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "general_bloomington_info.txt:13c070c6e54de301",
+          "document_ids": [],
+          "source": "general_bloomington_info",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "transportation.txt:3b2335ce64d5d1bf",
+          "document_ids": [],
+          "source": "transportation",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "attractions_and_entertainment.txt:94b9fd8b851fddf7",
+          "document_ids": [
+            "bloomington_00930"
+          ],
+          "source": "attractions_and_entertainment",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "hotels_and_accommodation.txt:618ce353e4a83cf3",
+          "document_ids": [
+            "bloomington_00567"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "general_bloomington_info.txt:8ae381fc2f769138",
+          "document_ids": [
+            "bloomington_00757"
+          ],
+          "source": "general_bloomington_info",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 0.0,
+        "hit_at_3": 0.0,
+        "hit_at_5": 0.0,
+        "mrr": 0.0,
+        "recall_at_1": 0.0,
+        "recall_at_3": 0.0,
+        "recall_at_5": 0.0
+      }
+    },
+    {
+      "id": "unanswerable_008",
+      "question": "What is the Wi-Fi password at my hotel?",
+      "case_type": "out_of_scope",
+      "answerable": false,
+      "gold_document_ids": [],
+      "retrieval_ms": 3.65,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "hotels_and_accommodation.txt:ef312141d9448ded",
+          "document_ids": [
+            "bloomington_00778"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "hotels_and_accommodation.txt:67633f17218f3896",
+          "document_ids": [
+            "bloomington_00331"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "hotels_and_accommodation.txt:4ff213357c9d6477",
+          "document_ids": [
+            "bloomington_00651"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "hotels_and_accommodation.txt:ca0148a995d5ef4c",
+          "document_ids": [
+            "bloomington_00876"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "hotels_and_accommodation.txt:321e11346fc93bae",
+          "document_ids": [],
+          "source": "hotels_and_accommodation",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 0.0,
+        "hit_at_3": 0.0,
+        "hit_at_5": 0.0,
+        "mrr": 0.0,
+        "recall_at_1": 0.0,
+        "recall_at_3": 0.0,
+        "recall_at_5": 0.0
+      }
+    },
+    {
+      "id": "unanswerable_009",
+      "question": "Can you refund my Bloomington parking ticket?",
+      "case_type": "out_of_scope",
+      "answerable": false,
+      "gold_document_ids": [],
+      "retrieval_ms": 3.68,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "hotels_and_accommodation.txt:b21c6dd0ae05ce76",
+          "document_ids": [
+            "bloomington_00011"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "hotels_and_accommodation.txt:ab7c8e46e2f7deb6",
+          "document_ids": [],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "hotels_and_accommodation.txt:902bab20d622f1d9",
+          "document_ids": [],
+          "source": "hotels_and_accommodation",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "restaurants_and_dining.txt:be649bb3159af1a2",
+          "document_ids": [
+            "bloomington_00501"
+          ],
+          "source": "restaurants_and_dining",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "hotels_and_accommodation.txt:43d1c6e7e97c96c2",
+          "document_ids": [
+            "bloomington_00722"
+          ],
+          "source": "hotels_and_accommodation",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 0.0,
+        "hit_at_3": 0.0,
+        "hit_at_5": 0.0,
+        "mrr": 0.0,
+        "recall_at_1": 0.0,
+        "recall_at_3": 0.0,
+        "recall_at_5": 0.0
+      }
+    },
+    {
+      "id": "unanswerable_010",
+      "question": "Which restaurant has an open table for six at 7:15 PM today?",
+      "case_type": "time_sensitive",
+      "answerable": false,
+      "gold_document_ids": [],
+      "retrieval_ms": 3.71,
+      "retrieved": [
+        {
+          "rank": 1,
+          "chunk_id": "restaurants_and_dining.txt:6290b88d8a815284",
+          "document_ids": [
+            "bloomington_00008"
+          ],
+          "source": "restaurants_and_dining",
+          "score": null
+        },
+        {
+          "rank": 2,
+          "chunk_id": "restaurants_and_dining.txt:8fce74ba31af27c4",
+          "document_ids": [
+            "bloomington_00515"
+          ],
+          "source": "restaurants_and_dining",
+          "score": null
+        },
+        {
+          "rank": 3,
+          "chunk_id": "restaurants_and_dining.txt:6a2e4890e5a904ca",
+          "document_ids": [],
+          "source": "restaurants_and_dining",
+          "score": null
+        },
+        {
+          "rank": 4,
+          "chunk_id": "restaurants_and_dining.txt:d4d7ee9447a55fa1",
+          "document_ids": [
+            "bloomington_00474"
+          ],
+          "source": "restaurants_and_dining",
+          "score": null
+        },
+        {
+          "rank": 5,
+          "chunk_id": "restaurants_and_dining.txt:588dd0f46994d772",
+          "document_ids": [
+            "bloomington_00669"
+          ],
+          "source": "restaurants_and_dining",
+          "score": null
+        }
+      ],
+      "retrieval_metrics": {
+        "hit_at_1": 0.0,
+        "hit_at_3": 0.0,
+        "hit_at_5": 0.0,
+        "mrr": 0.0,
+        "recall_at_1": 0.0,
+        "recall_at_3": 0.0,
+        "recall_at_5": 0.0
+      }
+    }
+  ]
+}

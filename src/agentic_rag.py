@@ -1,22 +1,15 @@
 import os
-from typing import TypedDict, List, Annotated
+from typing import TypedDict, List
 from dotenv import load_dotenv
-from langchain_community.document_loaders import (
-    TextLoader, DirectoryLoader
-)
-from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_huggingface import HuggingFaceEmbeddings
-from langchain_qdrant import QdrantVectorStore
-from langchain_groq import ChatGroq
+from langchain_ollama import ChatOllama
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
-from langchain_core.runnables import RunnableLambda
-from qdrant_client import QdrantClient
-from qdrant_client.models import Distance, VectorParams
-from rank_bm25 import BM25Okapi
-from sentence_transformers import CrossEncoder
 from langgraph.graph import StateGraph, END
-import operator
+
+try:
+    from src.retrieval import RetrievalConfig, RetrievalEngine
+except ModuleNotFoundError:  # direct execution with src/ on sys.path
+    from retrieval import RetrievalConfig, RetrievalEngine
 
 load_dotenv()
 
@@ -47,113 +40,22 @@ class RAGState(TypedDict):
 # SETUP (same as before)
 # ============================================================
 
-def setup_retrievers(data_dir="data/processed"):
+def setup_retrievers(data_dir=None):
     print("Setting up retrievers...")
-
-    loader = DirectoryLoader(
-        data_dir,
-        glob="**/*.txt",
-        loader_cls=TextLoader,
-        loader_kwargs={"encoding": "utf-8"}
+    engine = RetrievalEngine(
+        RetrievalConfig(strategy="hybrid", rerank=True, top_k=4),
+        data_dir=data_dir,
     )
-    documents = loader.load()
-
-    splitter = RecursiveCharacterTextSplitter(
-        chunk_size=600,
-        chunk_overlap=100,
-        separators=["---", "\n\n", "\n", ". "]
-    )
-    chunks = splitter.split_documents(documents)
-    print(f"Loaded {len(chunks)} chunks")
-
-    embedding_model = HuggingFaceEmbeddings(
-        model_name="all-MiniLM-L6-v2",
-        model_kwargs={"device": "cpu"}
-    )
-    client = QdrantClient(":memory:")
-    client.create_collection(
-        collection_name="bloomington",
-        vectors_config=VectorParams(
-            size=384,
-            distance=Distance.COSINE
-        )
-    )
-    vector_store = QdrantVectorStore(
-        client=client,
-        collection_name="bloomington",
-        embedding=embedding_model
-    )
-    vector_store.add_documents(chunks)
-
-    bm25 = BM25OkapiRetriever(chunks)
-
-    reranker = CrossEncoder(
-        "cross-encoder/ms-marco-MiniLM-L-6-v2",
-        max_length=512
-    )
-
+    print(f"Loaded {len(engine.chunks)} chunks")
     print("All retrievers ready.")
-    return vector_store, bm25, reranker, chunks
-
-
-class BM25OkapiRetriever:
-    def __init__(self, documents):
-        self.documents = documents
-        tokenized = [
-            doc.page_content.lower().split()
-            for doc in documents
-        ]
-        self.bm25 = BM25Okapi(tokenized)
-
-    def retrieve(self, query, k=8):
-        scores = self.bm25.get_scores(query.lower().split())
-        top_indices = sorted(
-            range(len(scores)),
-            key=lambda i: scores[i],
-            reverse=True
-        )[:k]
-        return [self.documents[i] for i in top_indices]
-
-
-def reciprocal_rank_fusion(results_list, k=60):
-    scores = {}
-    for results in results_list:
-        for rank, doc in enumerate(results, 1):
-            doc_id = doc.page_content[:100]
-            if doc_id not in scores:
-                scores[doc_id] = {"score": 0, "doc": doc}
-            scores[doc_id]["score"] += 1 / (k + rank)
-    return [
-        item["doc"]
-        for item in sorted(
-            scores.values(),
-            key=lambda x: x["score"],
-            reverse=True
-        )
-    ]
+    return engine, None, None, engine.chunks
 
 
 def retrieve_for_query(query, vector_store, bm25, reranker, k=4):
     """Full 3-layer retrieval for a single query."""
-    vector_results = vector_store.similarity_search(query, k=8)
-    bm25_results = bm25.retrieve(query, k=8)
-    combined = reciprocal_rank_fusion(
-        [vector_results, bm25_results]
-    )
-
-    pairs = [(query, doc.page_content) for doc in combined]
-    scores = reranker.predict(pairs)
-    scored = sorted(
-        zip(scores, combined),
-        key=lambda x: x[0],
-        reverse=True
-    )
-
-    confident = [(s, d) for s, d in scored if s > 0]
-    if len(confident) < 2:
-        confident = scored[:2]
-
-    return confident[:k]
+    if not isinstance(vector_store, RetrievalEngine):
+        raise TypeError("setup_retrievers() must supply the shared RetrievalEngine")
+    return vector_store.retrieve_legacy(query, top_k=k)
 
 
 # ============================================================
@@ -161,10 +63,11 @@ def retrieve_for_query(query, vector_store, bm25, reranker, k=4):
 # ============================================================
 
 def get_llm():
-    return ChatGroq(
-        api_key=os.getenv("GROQ_API_KEY"),
-        model_name="llama-3.1-8b-instant",
-        temperature=0
+    """Return the local, zero-cost model used by the agentic pipeline."""
+    return ChatOllama(
+        base_url=os.getenv("OLLAMA_BASE_URL", "http://localhost:11434"),
+        model=os.getenv("OLLAMA_MODEL", "llama3.1:8b"),
+        temperature=0,
     )
 
 

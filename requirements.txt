@@ -44,6 +44,7 @@ langchain-core==1.4.0
 langchain-groq==1.1.2
 langchain-huggingface==1.2.2
 langchain-openai==1.2.1
+langchain-ollama==1.1.0
 langchain-protocol==0.0.15
 langchain-qdrant==1.1.0
 langchain-text-splitters==1.1.2

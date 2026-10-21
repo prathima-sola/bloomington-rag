@@ -1,0 +1,13 @@
+name: hybrid_no_rerank
+pipeline: linear
+retrieval:
+  strategy: hybrid
+  rerank: false
+  dense_k: 8
+  bm25_k: 8
+  rrf_k: 60
+  top_k: 5
+  chunk_size: 600
+  chunk_overlap: 100
+  embedding_model: all-MiniLM-L6-v2
+  reranker_model: cross-encoder/ms-marco-MiniLM-L-6-v2

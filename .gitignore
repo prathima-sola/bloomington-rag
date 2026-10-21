@@ -6,3 +6,7 @@ __pycache__/
 data/raw/
 qdrant_storage/
 .pytest_cache/
+.venv/
+evals/results/*_local.json
+evals/results/ci_*.json
+evals/results/legacy_entrypoint.json
