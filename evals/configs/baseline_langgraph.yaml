@@ -17,5 +17,5 @@ generation:
   base_url: http://localhost:11434
 judge:
   provider: ollama
-  model: qwen3:8b
+  model: qwen3:4b
   base_url: http://localhost:11434

@@ -39,7 +39,7 @@ Run free local generation and judging:
 
 ```bash
 ollama pull llama3.1:8b
-ollama pull qwen3:8b
+ollama pull qwen3:4b
 python -m evals.runners.run_eval \
   --config evals/configs/baseline.yaml \
   --with-generation
