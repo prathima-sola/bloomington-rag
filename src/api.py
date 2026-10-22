@@ -1,5 +1,6 @@
 import os
-import sys
+from contextlib import asynccontextmanager
+from threading import Lock, Thread
 
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
@@ -13,84 +14,37 @@ load_dotenv()
 _pipeline = {}
 _ready = False
 _loading = False
+_load_error = None
+_load_lock = Lock()
 
 
 def load_pipeline():
-    global _pipeline, _ready, _loading
+    global _pipeline, _ready, _loading, _load_error
+    if not _load_lock.acquire(blocking=False):
+        return
+    _ready = False
     _loading = True
+    _load_error = None
 
     try:
         print("Starting pipeline load...")
 
-        from langchain_community.document_loaders import (
-            TextLoader, DirectoryLoader
-        )
-        from langchain_text_splitters import (
-            RecursiveCharacterTextSplitter
-        )
-        from langchain_huggingface import HuggingFaceEmbeddings
-        from langchain_qdrant import QdrantVectorStore
         from langchain_groq import ChatGroq
         from langchain_core.prompts import ChatPromptTemplate
         from langchain_core.output_parsers import StrOutputParser
         from langchain_core.runnables import RunnableLambda
-        from qdrant_client import QdrantClient
-        from qdrant_client.models import Distance, VectorParams
-        from rank_bm25 import BM25Okapi
-        from sentence_transformers import CrossEncoder
+        from src.retrieval import RetrievalConfig, RetrievalEngine
 
         print("Imports done.")
 
         base = os.path.dirname(os.path.abspath(__file__))
         data_dir = os.path.join(base, "..", "data", "processed")
 
-        loader = DirectoryLoader(
-            data_dir,
-            glob="**/*.txt",
-            loader_cls=TextLoader,
-            loader_kwargs={"encoding": "utf-8"}
+        engine = RetrievalEngine(
+            RetrievalConfig(strategy="hybrid", rerank=True, top_k=4),
+            data_dir=data_dir,
         )
-        documents = loader.load()
-
-        splitter = RecursiveCharacterTextSplitter(
-            chunk_size=600,
-            chunk_overlap=100,
-            separators=["---", "\n\n", "\n", ". "]
-        )
-        chunks = splitter.split_documents(documents)
-        print(f"Loaded {len(chunks)} chunks")
-
-        embedding_model = HuggingFaceEmbeddings(
-            model_name="all-MiniLM-L6-v2",
-            model_kwargs={"device": "cpu"}
-        )
-
-        client = QdrantClient(":memory:")
-        client.create_collection(
-            collection_name="bloomington",
-            vectors_config=VectorParams(
-                size=384,
-                distance=Distance.COSINE
-            )
-        )
-        vector_store = QdrantVectorStore(
-            client=client,
-            collection_name="bloomington",
-            embedding=embedding_model
-        )
-        vector_store.add_documents(chunks)
-        print("Vector store ready.")
-
-        tokenized = [
-            doc.page_content.lower().split()
-            for doc in chunks
-        ]
-        bm25 = BM25Okapi(tokenized)
-
-        reranker = CrossEncoder(
-            "cross-encoder/ms-marco-MiniLM-L-6-v2",
-            max_length=512
-        )
+        print(f"Loaded {len(engine.chunks)} chunks")
 
         llm = ChatGroq(
             api_key=os.getenv("GROQ_API_KEY"),
@@ -120,69 +74,22 @@ Answer:""")
             | StrOutputParser()
         )
 
-        _pipeline["vector_store"] = vector_store
-        _pipeline["bm25"] = bm25
-        _pipeline["chunks"] = chunks
-        _pipeline["reranker"] = reranker
+        _pipeline["retrieval_engine"] = engine
         _pipeline["chain"] = chain
         _ready = True
         print("Pipeline ready!")
 
     except Exception as e:
         print(f"Pipeline error: {e}")
+        _load_error = str(e)
 
     finally:
         _loading = False
-
-
-def reciprocal_rank_fusion(results_list, k=60):
-    scores = {}
-    for results in results_list:
-        for rank, doc in enumerate(results, 1):
-            doc_id = doc.page_content[:100]
-            if doc_id not in scores:
-                scores[doc_id] = {"score": 0, "doc": doc}
-            scores[doc_id]["score"] += 1 / (k + rank)
-    return [
-        item["doc"]
-        for item in sorted(
-            scores.values(),
-            key=lambda x: x["score"],
-            reverse=True
-        )
-    ]
+        _load_lock.release()
 
 
 def retrieve(query):
-    vector_store = _pipeline["vector_store"]
-    bm25 = _pipeline["bm25"]
-    chunks = _pipeline["chunks"]
-    reranker = _pipeline["reranker"]
-
-    vector_results = vector_store.similarity_search(query, k=8)
-    bm25_scores = bm25.get_scores(query.lower().split())
-    top_indices = sorted(
-        range(len(bm25_scores)),
-        key=lambda i: bm25_scores[i],
-        reverse=True
-    )[:8]
-    bm25_results = [chunks[i] for i in top_indices]
-    combined = reciprocal_rank_fusion(
-        [vector_results, bm25_results]
-    )
-
-    pairs = [(query, doc.page_content) for doc in combined]
-    scores = reranker.predict(pairs)
-    scored = sorted(
-        zip(scores, combined),
-        key=lambda x: x[0],
-        reverse=True
-    )
-
-    confident = [(s, d) for s, d in scored if s > 0]
-    if len(confident) < 2:
-        confident = scored[:2]
-    return confident[:4]
+    return _pipeline["retrieval_engine"].retrieve_legacy(query, top_k=4)
 
 
 def format_context(docs):
@@ -199,19 +106,41 @@ def format_context(docs):
     return "\n\n".join(parts)
 
 
+@asynccontextmanager
+async def lifespan(_app):
+    # Do not block the web server port while models download/load. This lets
+    # Cloud Run start the container and serve the UI/health endpoint during a
+    # cold start. /ask remains unavailable until /ready reports 200.
+    Thread(target=load_pipeline, name="retrieval-loader", daemon=True).start()
+    print("Server started; retrieval pipeline is loading.")
+    yield
+
+
 # FastAPI app
-app = FastAPI(title="Bloomington Tourist Assistant")
-
-
-@app.on_event("startup")
-def startup_event():
-    load_pipeline()
-    print("Server ready.")
+app = FastAPI(title="Bloomington Tourist Assistant", lifespan=lifespan)
 
 
 @app.get("/health")
 def health():
-    return {"status": "ok", "ready": _ready, "loading": _loading}
+    return {
+        "status": "ready" if _ready else "loading" if _loading else "error",
+        "ready": _ready,
+        "loading": _loading,
+        "error": _load_error,
+    }
+
+
+@app.get("/ready")
+def readiness():
+    if _ready:
+        return {"status": "ready"}
+    return JSONResponse(
+        status_code=503,
+        content={
+            "status": "loading" if _loading else "error",
+            "error": _load_error,
+        },
+    )
 
 
 class QuestionRequest(BaseModel):

@@ -1,0 +1,71 @@
+name: RAG Evaluation Gate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  retrieval-eval:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      HF_HUB_DISABLE_PROGRESS_BARS: "1"
+      TOKENIZERS_PARALLELISM: "false"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Cache Hugging Face models
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: ${{ runner.os }}-hf-eval-v2
+          restore-keys: ${{ runner.os }}-hf-eval-
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install -e '.[eval]'
+
+      - name: Validate metric and dataset tests
+        run: python -m pytest -q
+
+      - name: Evaluate linear pipeline
+        run: >-
+          python -m evals.runners.run_eval
+          --config evals/configs/baseline.yaml
+          --output evals/results/ci_baseline_linear.json
+
+      - name: Gate linear hit@3
+        run: >-
+          python -m evals.check_regression
+          --baseline evals/baselines/baseline_linear.json
+          --candidate evals/results/ci_baseline_linear.json
+
+      - name: Evaluate LangGraph pipeline
+        run: >-
+          python -m evals.runners.run_eval
+          --config evals/configs/baseline_langgraph.yaml
+          --output evals/results/ci_baseline_langgraph.json
+
+      - name: Gate LangGraph hit@3
+        run: >-
+          python -m evals.check_regression
+          --baseline evals/baselines/baseline_langgraph.json
+          --candidate evals/results/ci_baseline_langgraph.json
+
+      - name: Upload evaluation results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: retrieval-eval-results
+          path: evals/results/ci_*.json
